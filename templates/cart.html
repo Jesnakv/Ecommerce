@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<style>
+    #count{
+        background-color: deeppink;
+        color: black;
+        border-radius: 50%;
+        padding: 0 8px;
+        position: absolute;
+        
+       
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-md bg-white">
+        
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+            <img id="logo" src="{% static 'images/icon.png' %}" alt="logo" class="img-fluid">
+            <span class="fw-lighter ms-2 text-dark" id="logohead">SHOPPINGLY</span>
+        </a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#heading" type="button" >
+            <span class="bi bi-justify"></span>
+           
+         </button>
+        </div>
+        
+        <div id="heading" class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'user_home' %}">Home</a>
+                <li class="nav-item">
+                   
+                    <a class="nav-link bi bi-cart-fill" href="{% url 'view_cart' %}">
+                        <span id="count">{{cou}}</span>
+                    </a>
+                    
+                </li>
+                
+            </li>
+            
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" >
+                  Categories
+                </a>
+                
+              </li>
+              
+           
+           
+           </ul>
+           
+        </div>
+    </nav>
+    <center> <h2 id="caption">CART</h2></center>
+
+    <div class="container">
+        <table class="table">
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <div class="cart-details">
+                        <img src="{{item.prod.pimage.url}}" alt="">
+                        <div>
+                        <p>{{item.prod.pname}}</p>
+                        <small>Price:<span>&#8377;</span>{{item.prod.price}}</small><br>
+                        <a href="{% url 'remove' item.id %}">Remove</a></div>
+
+
+                    </div>
+                </td>
+                
+                <td>
+                    <button  id="cartbtn" type="submit" ><a href="{% url 'cartdecrement' item.prod.id %}" style="font-size: 25px;">-</a></button>
+                    <input  type="number" value="{{item.quantity}}" id="cartitem">
+                    <button  id="cartbtn" type="submit"><a href="{% url 'cartincrement' item.prod.id %} " style="font-size: 25px;">+</a></button>
+                    
+                <td><span>&#8377;</span>{{item.total_price}}</td></td>
+            </tr>
+          {% endfor %}
+        </table>
+     <div  class="total-price">
+        <table>
+            <tr>
+                
+                <td>Total</td>
+                <td><span>&#8377;</span>{{tot}}</td>
+                
+            </tr>
+            <tr>
+                <div>
+                    <td>
+                        <button class="btn" id="signupbtn"><a href="{% url 'checkout' %}">PAYNOW</a> </button>
+                    </td>
+                </div>
+            </tr>
+        </table>
+        
+     </div>
+    </div>
+    <div class="container">
+        <footer class="py-3 my-4">
+          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary text-dark">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary text-dark">Contact Us</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary text-dark">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary text-dark">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary text-dark">About</a></li>
+          </ul>
+          <p class="text-center text-body-secondary">© 2024 SHOPPINGLY, Inc</p>
+        </footer>
+      </div>
+      <script src="script.js"></script>
+</body>
+</html>
